@@ -96,7 +96,7 @@ export const testScenarios = {
     steps: [
       { action: 'click', target: '.btn-raining', mood: 'sad' },
       { expect: 'pet-screen', toBeVisible: true },
-      { action: 'click', target: '[onclick="careForPip(\'hug\')"]', repeat: 3 },
+      { action: 'click', target: '[onclick="careForPip(\'hug\')" ]', repeat: 3 },
       { expect: 'joy-text', toContain: '100' },
       { expect: 'pet-face', toContain: '💖' },
     ],
