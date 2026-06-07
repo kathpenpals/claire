@@ -2,34 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Hug for Claire</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Quicksand', sans-serif;
             margin: 0;
             padding: 0;
-            overflow: hidden; 
-            width: 100vw;
-            height: 100vh;
-            position: fixed;
-            touch-action: none; 
             background-color: #c8e6c9;
+            overflow-x: hidden;
         }
 
         .app-container {
             background: linear-gradient(135deg, #c8e6c9, #ffccbc, #fff9c4);
             background-size: 300% 300%;
             animation: softBackground 12s ease infinite;
-            width: 100%;
-            height: 100%;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            box-sizing: border-box;
             text-align: center;
         }
 
@@ -42,6 +40,12 @@
         .content-wrapper {
             width: 100%;
             max-width: 400px;
+            animation: fadeIn 0.4s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         h1 {
@@ -136,9 +140,9 @@
 
         @keyframes breatheCycle {
             0% { transform: scale(1); }
-            40% { transform: scale(1.4); } /* Inhale 4s */
-            60% { transform: scale(1.4); } /* Hold 2s */
-            100% { transform: scale(1); } /* Exhale 4s */
+            40% { transform: scale(1.4); }
+            60% { transform: scale(1.4); }
+            100% { transform: scale(1); }
         }
 
         .breathe-text {
@@ -186,6 +190,7 @@
             justify-content: space-between;
             gap: 12px;
             margin-top: 15px;
+            flex-wrap: wrap;
         }
 
         .action-btn {
@@ -199,6 +204,7 @@
             color: #2e7d32;
             cursor: pointer;
             flex: 1;
+            min-width: 90px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -223,6 +229,18 @@
             color: #0288d1;
             width: 100%;
             margin-top: 15px;
+            flex: none;
+        }
+
+        .exit-breathing-btn {
+            background-color: #ffebee;
+            border-color: #ef5350;
+            box-shadow: 0 4px 0 #ef5350;
+            color: #c62828;
+            width: 100%;
+            margin-top: 15px;
+            flex: none;
+            font-size: 0.75rem;
         }
 
         .hidden {
@@ -238,7 +256,7 @@
         }
 
         .back-btn {
-            position: absolute;
+            position: fixed;
             top: 20px;
             left: 20px;
             background: none;
@@ -247,6 +265,11 @@
             color: #2e7d32;
             cursor: pointer;
             z-index: 100;
+            padding: 10px;
+        }
+
+        .back-btn:active {
+            transform: scale(1.2);
         }
     </style>
 </head>
@@ -302,6 +325,10 @@
             <button class="action-btn breathe-btn" id="breathe-btn" onclick="startBreathing()">
                 <span class="action-icon">🌬️</span> Breathe with Pip
             </button>
+
+            <button class="action-btn exit-breathing-btn hidden" id="exit-breathe-btn" onclick="exitBreathing()">
+                ✕ Exit Breathing
+            </button>
         </div>
 
     </div>
@@ -309,6 +336,7 @@
     <script>
         let pipJoy = 15;
         let breathingInterval;
+        let isBreathing = false;
 
         const moodScreen = document.getElementById('mood-screen');
         const petScreen = document.getElementById('pet-screen');
@@ -323,8 +351,9 @@
         const breatheBtn = document.getElementById('breathe-btn');
         const breatheText = document.getElementById('breathe-text');
         const petSubtitle = document.getElementById('pet-subtitle');
+        const exitBreatheBtn = document.getElementById('exit-breathe-btn');
 
-        // ✨ CUSTOM AFFIRMATIONS: Add your own messages for Claire here! ✨
+        // ✨ CUSTOM AFFIRMATIONS ✨
         const affirmations = [
             "Yay! Thank you, Claire! Remember, I am always here for you. You've got this! 💕",
             "We did it! You are so incredibly loved, Claire. Take it one day at a time. 🌻",
@@ -344,6 +373,7 @@
                 moodMessage.innerText = "";
                 
                 pipJoy = 15;
+                isBreathing = false;
                 updatePipUI();
                 stopBreathing();
                 
@@ -351,6 +381,7 @@
                 petSpeech.innerHTML = "*Sniff*... I feel blue too...<br>Care for me?";
                 actionButtons.classList.remove('hidden');
                 breatheBtn.classList.remove('hidden');
+                exitBreatheBtn.classList.add('hidden');
                 joyContainer.classList.remove('hidden');
                 petSpeech.classList.remove('hidden');
             }
@@ -383,12 +414,12 @@
             if (pipJoy >= 100) {
                 setTimeout(() => {
                     petFace.innerText = "🥰🐰💖";
-                    // Pick a random affirmation from the list
                     const randomMessage = affirmations[Math.floor(Math.random() * affirmations.length)];
                     petSpeech.innerHTML = randomMessage;
                     
                     actionButtons.classList.add('hidden');
                     breatheBtn.classList.add('hidden');
+                    exitBreatheBtn.classList.add('hidden');
                 }, 1000);
             }
         }
@@ -405,41 +436,60 @@
         }
 
         function startBreathing() {
-            // Hide standard UI elements
+            isBreathing = true;
+            
             actionButtons.classList.add('hidden');
             joyContainer.classList.add('hidden');
             petSpeech.classList.add('hidden');
             breatheBtn.classList.add('hidden');
             
-            // Show breathing UI
             breatheText.classList.remove('hidden');
+            exitBreatheBtn.classList.remove('hidden');
             petSubtitle.innerText = "Follow Pip's rhythm...";
             petFace.innerText = "😌🐰";
             petFace.classList.add('breathing');
 
-            // Set text timing (4s inhale, 2s hold, 4s exhale)
             const breatheCycle = () => {
+                if (!isBreathing) return;
                 breatheText.innerText = "Breathe in...";
                 setTimeout(() => {
+                    if (!isBreathing) return;
                     breatheText.innerText = "Hold...";
                     setTimeout(() => {
+                        if (!isBreathing) return;
                         breatheText.innerText = "Breathe out...";
                     }, 2000);
                 }, 4000);
             };
 
-            breatheCycle(); // Start immediately
-            breathingInterval = setInterval(breatheCycle, 10000); // Repeat every 10s
+            breatheCycle();
+            breathingInterval = setInterval(breatheCycle, 10000);
         }
 
-        function stopBreathing() {
-            clearInterval(breathingInterval);
-            petFace.classList.remove('breathing');
-            breatheText.classList.add('hidden');
+        function exitBreathing() {
+            isBreathing = false;
+            stopBreathing();
+            
+            petFace.innerText = "🥺🐰";
+            petSpeech.innerHTML = "*Sniff*... I feel blue too...<br>Care for me?";
+            actionButtons.classList.remove('hidden');
+            breatheBtn.classList.remove('hidden');
+            exitBreatheBtn.classList.add('hidden');
+            joyContainer.classList.remove('hidden');
+            petSpeech.classList.remove('hidden');
             petSubtitle.innerText = "Can you help cheer up the bunny?";
         }
 
+        function stopBreathing() {
+            isBreathing = false;
+            clearInterval(breathingInterval);
+            petFace.classList.remove('breathing');
+            breatheText.classList.add('hidden');
+            exitBreatheBtn.classList.add('hidden');
+        }
+
         function resetApp() {
+            isBreathing = false;
             stopBreathing();
             petScreen.classList.add('hidden');
             moodScreen.classList.remove('hidden');
