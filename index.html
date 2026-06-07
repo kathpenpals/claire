@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Hug for Claire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #f8bbd0, #c8e6c9, #b2dfdb);
+            background-size: 300% 300%;
+            animation: softBackground 12s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #4a4a4a;
+        }
+
+        @keyframes softBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .phone-container {
+            background-color: #e0f7fa;
+            width: 340px;
+            height: 650px;
+            border-radius: 40px;
+            border: 12px solid #66bb6a;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15), inset 0 0 20px rgba(255,255,255,0.8);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        /* Top Notch */
+        .phone-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background-color: #66bb6a;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            z-index: 10;
+        }
+
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2rem;
+            color: #fff;
+            text-shadow: 2px 2px 0px #66bb6a, -2px -2px 0px #66bb6a, 2px -2px 0px #66bb6a, -2px 2px 0px #66bb6a;
+            margin-top: 30px;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 25px;
+        }
+
+        /* Main Mood Buttons */
+        .mood-btn {
+            border: 3px solid #fff;
+            padding: 15px 20px;
+            margin: 12px 0;
+            border-radius: 40px;
+            font-size: 1.2rem;
+            font-family: 'Fredoka One', cursive;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            color: #fff;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 1px;
+        }
+
+        .mood-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 rgba(0,0,0,0.1);
+        }
+
+        .btn-sunny { background: linear-gradient(to right, #ffb6c1, #ff9a9e); text-shadow: 1px 1px #d87093; }
+        .btn-okay { background: linear-gradient(to right, #c8e6c9, #a5d6a7); text-shadow: 1px 1px #558b2f; }
+        .btn-raining { background: linear-gradient(to right, #a1c4fd, #c2e9fb); text-shadow: 1px 1px #74b9ff; }
+
+        /* Pet Screen Specifics */
+        .speech-bubble {
+            background: #fff;
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #2e7d32;
+            border: 2px solid #66bb6a;
+            display: inline-block;
+            margin-bottom: 10px;
+            position: relative;
+            box-shadow: 0 4px 0 #66bb6a;
+        }
+
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px 10px 0;
+            border-style: solid;
+            border-color: #66bb6a transparent transparent transparent;
+            display: block;
+            width: 0;
+        }
+
+        .pet-character {
+            font-size: 3.5rem;
+            margin: 10px 0 20px 0;
+            color: #74b9ff;
+            text-shadow: 2px 2px 0px #fff;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Joy Bar */
+        .joy-bar-container {
+            width: 100%;
+            background-color: #fff;
+            border-radius: 20px;
+            height: 30px;
+            margin: 15px 0;
+            border: 3px solid #2e7d32;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 3px 5px rgba(0,0,0,0.1);
+        }
+
+        .joy-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #81c784 0%, #c8e6c9 99%, #c8e6c9 100%);
+            width: 15%; 
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .joy-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #2e7d32;
+            width: 100%;
+        }
+
+        /* Action Buttons */
+        .action-btns {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .action-btn {
+            background-color: #fff;
+            border: 3px solid #66bb6a;
+            border-radius: 20px;
+            padding: 10px 5px;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: #2e7d32;
+            cursor: pointer;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 0 #66bb6a;
+            transition: all 0.2s;
+        }
+
+        .action-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #66bb6a;
+        }
+
+        .action-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .message {
+            font-size: 1rem;
+            margin-top: 20px;
+            color: #2e7d32;
+            font-weight: bold;
+            min-height: 40px;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 30px;
+            left: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #66bb6a;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- MOOD TRACKER SCREEN -->
+        <div id="mood-screen">
+            <h1>Daily Hug<br><span style="font-size: 1.5rem; color: #fff;">for Claire</span></h1>
+            <p class="subtitle">Hello Claire!<br>How is your heart today?</p>
+            
+            <button class="mood-btn btn-sunny" onclick="logMood('happy')">🌸 SUNNY! 😊</button>
+            <button class="mood-btn btn-okay" onclick="logMood('okay')">☁️ OKAY! 😐</button>
+            <button class="mood-btn btn-raining" onclick="logMood('sad')">💧 RAINING... 😢</button>
+            
+            <div class="message" id="mood-message"></div>
+        </div>
+
+        <!-- TAMAGOTCHI SCREEN -->
+        <div id="pet-screen" class="hidden">
+            <button class="back-btn" onclick="resetApp()">❮</button>
+            <h2 style="font-family: 'Fredoka One'; color: #2e7d32; font-size: 1.5rem; margin-top: 35px; margin-bottom: 5px;">Oh No! Little Pip<br>needs a cuddle!</h2>
+            <p style="font-size: 0.9rem; font-weight: 700; color: #558b2f;">Can you help cheer up Little Pip?</p>
+            
+            <div class="speech-bubble" id="pet-speech">
+                *Sniff*... I feel blue too...<br>Care for me?
+            </div>
+            
+            <div class="pet-character" id="pet-face">
+                ૮( ꒦ິ ˙̫̮ ꒦ີ )ა
+            </div>
+            
+            <div class="joy-bar-container">
+                <div class="joy-bar" id="joy-bar" style="width: 15%;"></div>
+                <div class="joy-text" id="joy-text">☹️ Pip's Joy: 15%</div>
+            </div>
+
+            <div class="action-btns" id="action-buttons">
+                <button class="action-btn" style="background-color: #ffebee; border-color: #ffb6c1; box-shadow: 0 4px 0 #ffb6c1;" onclick="careForPip('feed')">
+                    <span class="action-icon">🍓</span> Feed a Sweet Berry
+                </button>
+                <button class="action-btn" style="background-color: #f1f8e9; border-color: #aed581; box-shadow: 0 4px 0 #aed581;" onclick="careForPip('hug')">
+                    <span class="action-icon">🧸</span> Give a Warm Hug
+                </button>
+                <button class="action-btn" style="background-color: #e3f2fd; border-color: #90caf9; box-shadow: 0 4px 0 #90caf9;" onclick="careForPip('tune')">
+                    <span class="action-icon">🎵</span> Play a Gentle Tune
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let pipJoy = 15;
+
+        const moodScreen = document.getElementById('mood-screen');
+        const petScreen = document.getElementById('pet-screen');
+        const moodMessage = document.getElementById('mood-message');
+        
+        const petFace = document.getElementById('pet-face');
+        const petSpeech = document.getElementById('pet-speech');
+        const joyBar = document.getElementById('joy-bar');
+        const joyText = document.getElementById('joy-text');
+        const actionButtons = document.getElementById('action-buttons');
+
+        function logMood(mood) {
+            if (mood === 'happy') {
+                moodMessage.innerText = "I'm so happy your sky is sunny today! Keep shining, Claire! ☀️💖";
+            } else if (mood === 'okay') {
+                moodMessage.innerText = "Okay is totally fine. Wishing you a peaceful, cozy day! ☕☁️";
+            } else if (mood === 'sad') {
+                // Switch screens
+                moodScreen.classList.add('hidden');
+                petScreen.classList.remove('hidden');
+                moodMessage.innerText = "";
+                
+                // Reset Pip
+                pipJoy = 15;
+                updatePipUI();
+                petFace.innerText = "૮( ꒦ິ ˙̫̮ ꒦ີ )ა";
+                petSpeech.innerHTML = "*Sniff*... I feel blue too...<br>Care for me?";
+                actionButtons.classList.remove('hidden');
+            }
+        }
+
+        function careForPip(action) {
+            if (pipJoy >= 100) return;
+
+            let joyBoost = 0;
+
+            if (action === 'feed') {
+                joyBoost = 25;
+                petSpeech.innerHTML = "Nom nom! That berry is<br>so sweet! 🍓";
+                petFace.innerText = "૮ ˶ᵔ ᵕ ᵔ˶ ა";
+            } else if (action === 'hug') {
+                joyBoost = 35;
+                petSpeech.innerHTML = "Warm squishy hugs are<br>the best! 🧸💞";
+                petFace.innerText = "૮ ˶ˆ ﻌ ˆ˶ ა";
+            } else if (action === 'tune') {
+                joyBoost = 25;
+                petSpeech.innerHTML = "Ahhh... such a lovely<br>melody... 🎵✨";
+                petFace.innerText = "૮ ˶~ ᵕ ~˶ ა";
+            }
+
+            pipJoy += joyBoost;
+            if (pipJoy > 100) pipJoy = 100;
+
+            updatePipUI();
+
+            if (pipJoy >= 100) {
+                setTimeout(() => {
+                    petFace.innerText = "૮ ˶> ﻌ <˶ ა 💖";
+                    petSpeech.innerHTML = "Yay! We both feel better!<br>Thank you, Claire! You are loved!";
+                    actionButtons.classList.add('hidden');
+                }, 1000);
+            }
+        }
+
+        function updatePipUI() {
+            joyBar.style.width = pipJoy + "%";
+            
+            let emoji = "☹️";
+            if (pipJoy > 40) emoji = "😐";
+            if (pipJoy > 75) emoji = "🙂";
+            if (pipJoy === 100) emoji = "🥰";
+            
+            joyText.innerText = `${emoji} Pip's Joy: ${pipJoy}%`;
+        }
+
+        function resetApp() {
+            petScreen.classList.add('hidden');
+            moodScreen.classList.remove('hidden');
+            moodMessage.innerText = "Welcome back, Claire! 🌷";
+        }
+    </script>
+</body>
+</html>
