@@ -125,6 +125,7 @@
             font-size: 5rem;
             margin: 10px 0 25px 0;
             animation: float 3s ease-in-out infinite;
+            will-change: transform;
         }
 
         @keyframes float {
@@ -134,13 +135,13 @@
 
         /* Breathing Animation */
         .breathing {
-            animation: breatheCycle 10s ease-in-out infinite !important;
+            animation: breatheCycle 10s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite !important;
         }
 
         @keyframes breatheCycle {
             0% { transform: scale(1); }
-            40% { transform: scale(1.4); }
-            60% { transform: scale(1.4); }
+            33% { transform: scale(1.4); }
+            66% { transform: scale(1.4); }
             100% { transform: scale(1); }
         }
 
